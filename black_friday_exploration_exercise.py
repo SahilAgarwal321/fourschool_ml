@@ -35,7 +35,7 @@ len(os.listdir())
 #      black-friday.zip into a variable 'df'
 
 # df = pd.read_csv("black-friday.zip")
-df = pd.read_csv("BlackFriday.csv")
+df = pd.read_csv("./data_files/BlackFriday.csv")
 
 ### Exploration of data
 
@@ -80,89 +80,91 @@ df.dtypes
 
 # 2.8 User_ID should be 'object' and not int64
 #     Make dtype of User_ID to 'object'
-
+df['User_ID'] = df['User_ID'].astype('object')
 
 
 
 # 2.9 Summarise datatypes by counts of dtypes
 #     ie how many are 'object', 'int64' etc
 #     Hint: Use method value_counts()
-
+df.dtypes.value_counts()
 
 
 
 # 3.0 Give a statistical summary of dataframe df
 #     In the summary include numeric and categorical (object)
 #     datatypes also:
-
+df.describe()
 
 
 
 # 3.1 Extract just two columns from the dataset:
 #     User_ID and Product_ID and also access its
 #     rwos from row 10 to 20
-
+df.loc[10:20, ['User_ID', 'Product_ID']]
 
 
 
 # 3.2 Which columns in the dataset have null values
-
+df.columns[df.isna().any()].tolist()
 
 # 3.3 How many and which all Age (ie age-groups) exist?
 #     Hint: Use value_counts()
-
+len(df['Age'].value_counts())
+df['Age'].value_counts()
 
 # 3.4  How many and which all kinds of Occupation exist?
-
+len(df['Occupation'].value_counts())
+df['Occupation'].value_counts()
 
 # 3.5 How many kinds of City_Category exist?
-
+len(df['City_Category'].value_counts())
 
 # 3.6 How many types of Products (ie Product_ID) exist?
-
+len(df['Product_ID'].value_counts())
 
 
 # 3.7 How many types of Product_Category_1,
 #     Product_Category_2 and Product_Category_3 exist?
-
-
+len(df['Product_Category_1'].value_counts())
+len(df['Product_Category_2'].value_counts())
+len(df['Product_Category_3'].value_counts())
 
 
 #3.8  Which top-10 User_ID occur most frequently
 #     Hint: Use: value_counts(), sort_values()
 #                and head()
-
+df['User_ID'].value_counts().head(10).index.tolist()
 
 
 # 3.9 Make a barplot of frequency of top-10 User_IDs
 #     that occur most frequently on Black Friday
 #     Can you order the graph either in
 #     decreasing/increasing order of frequency
-
-
+df['User_ID'].value_counts().head(10).plot(kind='bar')
+df['User_ID'].value_counts().head(10).sort_values().plot(kind='bar')
 
 
 #### Group and summarise data
 
 # 4.0 Find average purchases ('Purchase') per User_ID
 #     Hint: Use groupby(), sort_values() and head()
-
+df.groupby('User_ID')['Purchase'].mean()
 
 
 # 4.1 Refer answer to 4.0
 #     Plot a barchart of User_IDs average purchases wise
-
-
+df.groupby('User_ID')['Purchase'].mean().head(10).plot(kind='bar')
+# Using head(10) here as showing all values takes a lot of time to load.
 
 
 # 4.2 Product_ID wise average 'Purchase'?
-
-
+df.groupby('Product_ID')['Purchase'].mean()
 
 
 # 4.3 Plot top-10 Product_IDs most purchased on an average
-
-
+df.groupby('Product_ID').size().sort_values(ascending=False).head(10).plot(kind='bar')
+df.groupby('Product_ID').size().sort_values().tail(10).plot(kind='bar')
 
 
 # 4.4 Product_Category_1 wise mean 'Purchase'?
