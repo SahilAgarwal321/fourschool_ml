@@ -41,100 +41,100 @@ df = pd.read_csv("./data_files/BlackFriday.csv")
 
 # 2.0 Check the data type of 'df'. Is it
 #     a pandas DataFrame or a Pandas Series?
-type(df)
+print(type(df))
 
 
 # 2.1 How much memory does the dataframe 'df' uses?
 #     Hint: Use: .memory_usage()
-df.memory_usage()
+print(df.memory_usage())
 
 
 
 # 2.2 What is the shape of df
 #     How many rows and columns does it have?
-df.shape
+print(df.shape)
 
 
 # 2.3 What are the column names of df?
-df.columns
+print(df.columns)
 
 
 # 2.4 Get columns names as an array object
 #     Hint: Use attribute: .values
-df.columns.values
+print(df.columns.values)
 
 
 
 # 2.5 Print few five rows of DataFrame
-df.head(5)
+print(df.head(5))
 
 
 # 2.6 Print last five rows of DataFrame
-df.tail(5)
+print(df.tail(5))
 
 
 
 # 2.7 Check data types of each column of df
-df.dtypes
+print(df.dtypes)
 
 
 # 2.8 User_ID should be 'object' and not int64
 #     Make dtype of User_ID to 'object'
 df['User_ID'] = df['User_ID'].astype('object')
-
+print(df)
 
 
 # 2.9 Summarise datatypes by counts of dtypes
 #     ie how many are 'object', 'int64' etc
 #     Hint: Use method value_counts()
-df.dtypes.value_counts()
+print(df.dtypes.value_counts())
 
 
 
 # 3.0 Give a statistical summary of dataframe df
 #     In the summary include numeric and categorical (object)
 #     datatypes also:
-df.describe()
+print(df.describe())
 
 
 
 # 3.1 Extract just two columns from the dataset:
 #     User_ID and Product_ID and also access its
 #     rwos from row 10 to 20
-df.loc[10:20, ['User_ID', 'Product_ID']]
+print(df.loc[10:20, ['User_ID', 'Product_ID']])
 
 
 
 # 3.2 Which columns in the dataset have null values
-df.columns[df.isna().any()].tolist()
+print(df.columns[df.isna().any()].tolist())
 
 # 3.3 How many and which all Age (ie age-groups) exist?
 #     Hint: Use value_counts()
-len(df['Age'].value_counts())
-df['Age'].value_counts()
+print(len(df['Age'].value_counts()))
+print(df['Age'].value_counts())
 
 # 3.4  How many and which all kinds of Occupation exist?
-len(df['Occupation'].value_counts())
-df['Occupation'].value_counts()
+print(len(df['Occupation'].value_counts()))
+print(df['Occupation'].value_counts())
 
 # 3.5 How many kinds of City_Category exist?
-len(df['City_Category'].value_counts())
+print(len(df['City_Category'].value_counts()))
 
 # 3.6 How many types of Products (ie Product_ID) exist?
-len(df['Product_ID'].value_counts())
+print(len(df['Product_ID'].value_counts()))
 
 
 # 3.7 How many types of Product_Category_1,
 #     Product_Category_2 and Product_Category_3 exist?
-len(df['Product_Category_1'].value_counts())
-len(df['Product_Category_2'].value_counts())
-len(df['Product_Category_3'].value_counts())
+print(len(df['Product_Category_1'].value_counts()))
+print(len(df['Product_Category_2'].value_counts()))
+print(len(df['Product_Category_3'].value_counts()))
 
 
 #3.8  Which top-10 User_ID occur most frequently
 #     Hint: Use: value_counts(), sort_values()
 #                and head()
-df['User_ID'].value_counts().head(10).index.tolist()
+print(df['User_ID'].value_counts().head(10).index.tolist())
 
 
 # 3.9 Make a barplot of frequency of top-10 User_IDs
@@ -149,7 +149,7 @@ df['User_ID'].value_counts().head(10).sort_values().plot(kind='bar')
 
 # 4.0 Find average purchases ('Purchase') per User_ID
 #     Hint: Use groupby(), sort_values() and head()
-df.groupby('User_ID')['Purchase'].mean()
+print(df.groupby('User_ID')['Purchase'].mean())
 
 
 # 4.1 Refer answer to 4.0
@@ -159,7 +159,7 @@ df.groupby('User_ID')['Purchase'].mean().head(10).plot(kind='bar')
 
 
 # 4.2 Product_ID wise average 'Purchase'?
-df.groupby('Product_ID')['Purchase'].mean()
+print(df.groupby('Product_ID')['Purchase'].mean())
 
 
 # 4.3 Plot top-10 Product_IDs most purchased on an average
@@ -168,44 +168,43 @@ df.groupby('Product_ID').size().sort_values().tail(10).plot(kind='bar')
 
 
 # 4.4 Product_Category_1 wise mean 'Purchase'?
-
+print(df.groupby('Product_Category_1')['Purchase'].mean())
 
 
 # 4.5 Plot top-10 Product_Category_1 most purchased on an average
-
-
+df.groupby('Product_Category_1').size().sort_values().tail(10).plot(kind='bar')
 
 
 # 4.6 Product_Category_2 wise mean 'Purchase'?
-
+print(df.groupby('Product_Category_2')['Purchase'].mean())
 
 
 # 4.7 Plot top-10 Product_Category_2 most purchased on an average
-
-
+df.groupby('Product_Category_2').size().sort_values().tail(10).plot(kind='bar')
 
 
 # 4.8 Product_Category_3 wise mean 'Purchase'?
-
+print(df.groupby('Product_Category_3')['Purchase'].mean())
 
 
 # 4.9 Plot top-10 Product_Category_3s most purchased on an average
-
-
+df.groupby('Product_Category_3').size().sort_values().tail(10).plot(kind='bar')
 
 
 # 5.0 Which Product_Category_1 is more popular in which City_Category?
-
-
+df1 = df.groupby('City_Category')['Product_Category_1'].apply(lambda x: x.mode()).reset_index(name='Most_Popular_Product_Category')
+df1.drop('level_1', axis=1, inplace=True)
+print(df1)
 
 # 5.1 Get City_Category wise average 'Purchase'
-
+print(df.groupby('City_Category')['Purchase'].mean())
 
 # 5.2 Get Age wise average 'Purchase'?
+print(df.groupby('Age')['Purchase'].mean())
 
 
 # 5.3 Get City_Category wise and Age wise average 'Purchase'
-
+print(df.groupby(['City_Category', 'Age'])['Purchase'].mean())
 
 
 #### Relationships between two categories
@@ -230,15 +229,27 @@ _, p_value, _, _ = chi2_contingency(table)
 
 # 6.4 Now examine p_value
 if p_value <= level_of_significance:
-	print("Categorical variables have relationships")
+    print("Categorical variables have relationships")
 else:
-	print("Categorical variables have no relationships")
+    print("Categorical variables have no relationships")
 
 
 # 7.0 Similarly examine if there is any relationship between Age and Occupation?
+contingency_table = pd.crosstab(df['Age'], df['Occupation'])
+_, p_value, _, _ = chi2_contingency(contingency_table)
+if p_value <= level_of_significance:
+    print("Categorical variables have relationships")
+else:
+    print("Categorical variables have no relationships")
 
 
 # 7.1 And also examine if there is any Gender  and Marital_Status?
+contingency_table = pd.crosstab(df['Gender'], df['Marital_Status'])
+_, p_value, _, _ = chi2_contingency(contingency_table)
+if p_value <= level_of_significance:
+    print("Categorical variables have relationships")
+else:
+    print("Categorical variables have no relationships")
 
 
 ######################
